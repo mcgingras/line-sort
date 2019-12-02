@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="index.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.2/paper-core.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        var canvas = document.getElementById('myCanvas');
+        paper.setup(canvas);
+    }
+    
+    // main function that runs when you click go...
+    // probably want to clear the screen here
+    // load array
+    // load selection type
+    function loadArray(){
+        paper.project.clear()
+        let values = document.getElementById('array').value;
+        let sortType = document.getElementById('sortType').value;
+        draw(values, sortType);
+    }
+
+    function withIndices(arr){
+        let mod = [];
+        for(i=0; i<arr.length; i++){
+            mod.push([arr[i],i]);
+        }
+        return mod;
+    }
+
+    function bubbleSort(arr){
+        let paths = [];
+        arr = withIndices(arr);
+        for(a=0; a<arr.length; a++){
+            paths.push([arr[a][1]]);
+        }
+
+        for(k=0; k<arr.length; k++){
+            for(i=0; i<arr.length-1; i++){
+                if(arr[i+1] < arr[i]){
+                    let temp = arr[i];
+                    arr[i] = arr[i+1];
+                    arr[i+1] = temp;
+                }
+                for (j=0; j<arr.length; j++){
+                    let id = arr[j][1]; // is the id
+                    paths[id].push(j);
+                }
+            }
+        }
+
+        return paths; 
+    }
+
+    function addSnapshotToPaths(snapshot,paths){
+        for (i=0; i<snapshot.length; i++){
+            let id = snapshot[i][1]; 
+            paths[id].push(i);
+        }
+
+        return paths;
+    }
+
+    function selectionSort(arr){
+        // set path array to encode path each element takes
+        paths = [];
+
+        arr = withIndices(arr);
+        for(a=0; a<arr.length; a++){
+            paths.push([arr[a][1]]);
+        }
+
+        for (i=0; i<arr.length-1; i++){
+            let min = i;
+            for (j=i+1; j<arr.length; j++){
+                if (arr[j][0] <= arr[min][0]){
+                    min = j
+                }
+            }
+            let temp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = temp;
+
+            paths = addSnapshotToPaths(arr, paths);
+        }
+
+        return paths;
+    }
+
+    function draw(values, sortType){
+        let og = values.split(',');
+        let valArray = withIndices(og);
+        
+        let paths;
+        if(sortType == 'bubble'){
+            paths = bubbleSort(valArray);
+        }
+        else if(sortType == "selection"){
+            paths = selectionSort(valArray);
+        }
+         
+        let colors = ['red', '#431EB5', '#00C0FF', '#30FF9B'];
+        for(i=0; i<paths.length; i++){
+            let path = new paper.Path();
+            path.strokeWidth = '1'
+            path.strokeColor = colors[og[i]-1];
+
+            for(j=0; j<paths[i].length; j++){
+                let p = new paper.Point((j+1)*20,(paths[i][j]+2)*5);
+                path.add(p)
+            }
+            path.smooth();
+        }
+        paper.view.draw();
+    }
+    
+</script>
+</head>
+<body>
+    <input id="array" type="text" value="1,4,3,2" />
+    <button onclick="loadArray()">submit</button>
+    <select id="sortType">
+        <option value="bubble">bubble</option>
+        <option value="selection">selection</option>
+    </select>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
