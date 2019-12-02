@@ -1,0 +1,18 @@
+{
+  "name": "paper",
+  "version": "1.0.0",
+  "description": "visualizing sorting algorithms with lines.",
+  "main": "main.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "devDependencies": {},
+  "author": "michael gingras",
+  "license": "ISC"
+}
