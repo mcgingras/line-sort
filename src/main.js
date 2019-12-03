@@ -9,7 +9,36 @@ function loadArray(){
     paper.project.clear()
     let values = document.getElementById('array').value;
     let sortType = document.getElementById('sortType').value;
-    draw(values, sortType);
+    // draw(values, sortType);
+    drawAnimated(20);
+}
+
+function drawAnimated(n){
+    let values = document.getElementById('array').value;
+    let og = values.split(',');
+    let valArray = withIndices(og);
+    let paths = selectionSort(valArray);
+
+    let colors = ['#EE4141', '#FF6C81', '#F5BF24', '#67D3BE', '#67BBEF', '#8A65AA'];
+    var pathArray = [];
+    for(let i=0; i<og.length; i++){
+        let path = new paper.Path();
+        path.strokeWidth = '4';
+        path.strokeColor = colors[og[i]-1];
+        pathArray.push(path);
+    }
+
+
+    paper.view.onFrame = (event) => {
+        if(event.count%n == 0){
+            let index = event.count/n;
+            for(let j=0; j<pathArray.length; j++){
+                let path = pathArray[j];
+                let p = new paper.Point(index*20,(paths[j][index]+2)*20);
+                path.add(p);
+            }
+        }
+    }
 }
 
 /**
@@ -39,7 +68,8 @@ function draw(values, sortType){
         paths = selectionSort(valArray);
     }
      
-    let colors = ['#EE4141', '#F5BF24', '#FF6C81', '#67D3BE', '#67BBEF', '#8A65AA'];
+    let colors = ['#EE4141', '#FF6C81', '#F5BF24', '#67D3BE', '#67BBEF', '#8A65AA'];
+    
     for(let i=0; i<paths.length; i++){
         let path = new paper.Path();
         path.strokeWidth = '4';
@@ -51,7 +81,7 @@ function draw(values, sortType){
         }
         path.smooth();
     }
-    paper.view.draw();
+    // paper.view.draw();
 }
 
 document.getElementById('js--submit').addEventListener("click", loadArray);

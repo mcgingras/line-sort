@@ -14,14 +14,16 @@ body {
 }
 
 h1{
+    text-align: center;
     margin: 0;
     font-size: 36px;
     letter-spacing: 2px;
+    font-weight: 400;
 }
 
 /* Scale canvas with resize attribute to full size */
 canvas{
-    width: 50%;
+    width: 80%;
     height: 60%;
     box-sizing: border-box;
     margin: 0 auto;
@@ -33,13 +35,13 @@ canvas{
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .container--input{
     display: inline-block;
     position: absolute;
-    bottom: 4rem;
+    bottom: 2rem;
     right: calc(50% - 222px);
 }
 
@@ -51,7 +53,7 @@ canvas{
     box-shadow: none;
     box-sizing: border-box;
     width: 400px;
-    margin: 0 auto;
+    margin: 1rem auto;
     height: 44px;
     font-size: 16px;
     line-height: 1.5;
@@ -66,11 +68,17 @@ canvas{
 }
 
 .input--button{
+    margin: 1rem 0;
     border: none;
     float: left;
     width: 44px;
     height: 44px;
     background: #ff6c81 url('https://git-merge.com/2018/assets/images/svgs/arrow-right.svg') center/20px 24px no-repeat;
     z-index: 1;
+}
+
+.input--description{
+    text-align: center;
+    color: #999;
 }
 

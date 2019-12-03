@@ -1,4 +1,4 @@
-#line-sort
+# line-sort
 visualizing sorting algorithms with lines.
 
 todo
@@ -7,3 +7,6 @@ quick sort
 merge sort
 radix sort
 cocktail sort
+design
+animation (add lines when user adds to input)
+resize lines dependign on amount of sorts
