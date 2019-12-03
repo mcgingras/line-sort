@@ -3,9 +3,15 @@
     src: url("./relative-faux-webfont.ttf")
   }
 
+.c1{color: #EE4141}
+.c2{color: #FF6C81}
+.c3{color: #F5BF24}
+.c4{color: #67D3BE}
+.c5{color: #67BBEF}
+.c6{color: #8A65AA}
+
 html,
 body {
-    color: white;
     background-color: #151515;
     margin: 0;
     overflow: hidden;
@@ -21,6 +27,13 @@ h1{
     font-weight: 400;
 }
 
+.smallcaps{
+    font-size: 14px;
+    line-height: 1.25;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
 /* Scale canvas with resize attribute to full size */
 canvas{
     width: 80%;
@@ -29,9 +42,28 @@ canvas{
     margin: 0 auto;
 }
 
+.header{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+}
+
+.header p{
+    margin-left: 20px;
+    color: #999;
+}
+
+.header .active{
+    color: white;
+}
+
+.header p:hover{
+    color: white;
+}
 
 
 .container{
+    color: white;
     display: flex;
     flex-direction: column;
     height: 100%;

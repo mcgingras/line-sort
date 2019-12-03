@@ -9,17 +9,19 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>LINE SORT</h1>
-            <select id="sortType">
-                <option value="bubble">bubble</option>
-                <option value="selection">selection</option>
-            </select>
+            <h1>LINE SORTS</h1>
+            <p class="smallcaps active" id="js--selection">selection</p>
+            <p class="smallcaps" id="js--bubble">bubble</p>
+            <p class="smallcaps" id="js--merge">merge</p>
+            <p class="smallcaps" id="js--radix">radix</p>
+            <p class="smallcaps" id="js--quick">quick</p>
+            <p class="smallcaps" id="js--cocktail">cocktail</p>
         </div>
         <canvas id="myCanvas"></canvas>
         <div class="container--input">
             <input id="array" type="text" class="input" value="1,4,3,2,6,3,5,2,1,4,3,2,5" />
             <button class="input--button" id="js--submit"></button>
-            <p class="input--description">edit sorting array</p>
+            <p class="input--description smallcaps">(sorting input)</p>
         </div>
     </div>
     <script type="text/javascript" src="bundle.js"></script>

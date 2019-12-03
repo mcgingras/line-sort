@@ -1,52 +1,29 @@
 import {selectionSort, bubbleSort} from './sorts';
 
+let currentSort = 'selection';
+
 window.onload = function() {
-    var canvas = document.getElementById('myCanvas');
+    let canvas = document.getElementById('myCanvas');
     paper.setup(canvas);
 }
 
 function loadArray(){
-    paper.project.clear()
+    paper.project.clear();
     let values = document.getElementById('array').value;
-    let sortType = document.getElementById('sortType').value;
-    // draw(values, sortType);
-    drawAnimated(20);
+    draw(values);
 }
 
-function drawAnimated(n){
-    let values = document.getElementById('array').value;
-    let og = values.split(',');
-    let valArray = withIndices(og);
-    let paths = selectionSort(valArray);
-
-    let colors = ['#EE4141', '#FF6C81', '#F5BF24', '#67D3BE', '#67BBEF', '#8A65AA'];
-    var pathArray = [];
-    for(let i=0; i<og.length; i++){
-        let path = new paper.Path();
-        path.strokeWidth = '4';
-        path.strokeColor = colors[og[i]-1];
-        pathArray.push(path);
-    }
-
-
-    paper.view.onFrame = (event) => {
-        if(event.count%n == 0){
-            let index = event.count/n;
-            for(let j=0; j<pathArray.length; j++){
-                let path = pathArray[j];
-                let p = new paper.Point(index*20,(paths[j][index]+2)*20);
-                path.add(p);
-            }
-        }
-    }
+function setSort(event, sortType){
+    // I really truly hate the imperative structure of this code
+    const element = event.target;
+    const curActive = document.querySelectorAll(".active")[0];
+    curActive.className = 'smallcaps';
+    element.className = "smallcaps active";
+    currentSort = sortType;
+    loadArray();
 }
 
-/**
- * helper
- * 
- * adds indices to array so they can be tracked as paths
- * ex: [2,3,1] => [[2,1], [3,2], [1,3]]
- */
+
 function withIndices(arr){
     let mod = [];
     for(let i=0; i<arr.length; i++){
@@ -56,32 +33,40 @@ function withIndices(arr){
 }
 
 
-function draw(values, sortType){
+function draw(values){
     let og = values.split(',');
     let valArray = withIndices(og);
-    
     let paths;
-    if(sortType == 'bubble'){
+    
+    if(currentSort == 'bubble'){
         paths = bubbleSort(valArray);
     }
-    else if(sortType == "selection"){
+    else if(currentSort == "selection"){
         paths = selectionSort(valArray);
     }
      
     let colors = ['#EE4141', '#FF6C81', '#F5BF24', '#67D3BE', '#67BBEF', '#8A65AA'];
+    let canvas = document.getElementById('myCanvas');
+    const xStep = canvas.width/(paths[0].length-1)/2;
+    const yStep = canvas.height/(og.length-1)/2;
     
     for(let i=0; i<paths.length; i++){
         let path = new paper.Path();
-        path.strokeWidth = '4';
+        path.strokeWidth = '2';
         path.strokeColor = colors[og[i]-1];
 
         for(let j=0; j<paths[i].length; j++){
-            let p = new paper.Point(j*20,(paths[i][j]+2)*20);
+            let p = new paper.Point(j*xStep,paths[i][j]*yStep);
             path.add(p)
         }
-        path.smooth();
+        // path.smooth();
     }
-    // paper.view.draw();
 }
 
 document.getElementById('js--submit').addEventListener("click", loadArray);
+document.getElementById('js--selection').addEventListener("click", (e) => setSort(e,'selection'));
+document.getElementById('js--bubble').addEventListener("click", (e) => setSort(e, 'bubble'));
+// document.getElementById('js--merge').addEventListener("click", setSort('merge'));
+// document.getElementById('js--radix').addEventListener("click", setSort('radix'));
+// document.getElementById('js--quick').addEventListener("click", setSort('quick'));
+// document.getElementById('js--cocktail').addEventListener("click", setSort('cocktail'));
