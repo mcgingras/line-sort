@@ -9,3 +9,4 @@ cocktail sort
 fix small widow error on canvas
 
 slider for generative
+tests
