@@ -3,7 +3,6 @@ import {selectionSort, bubbleSort} from './sorts';
 let currentSort = 'selection';
 var smoothing = 0.5;   // range: (0.0, 1.0), def: 0.8
 var bins = 64;   // range: [16, 1024], def: 1024 - MUST be power of 2
-var offset = [80,-350,0];   // offset for controlling camera movement
 
 // audio related globals
 let canplay = false;
@@ -13,22 +12,8 @@ let analyser, waveArray, freqArray;
 window.onload = function() {
     let canvas = document.getElementById('myCanvas');
     paper.setup(canvas);
-    loadArray();
-}
-
-function loadArray(){
     let values = document.getElementById('array').value;
     draw(values);
-}
-
-function setSort(event, sortType){
-    // I really truly hate the imperative structure of this code
-    const element = event.target;
-    const curActive = document.querySelectorAll(".active")[0];
-    curActive.className = 'smallcaps';
-    element.className = "smallcaps active";
-    currentSort = sortType;
-    loadArray();
 }
 
 
@@ -72,18 +57,7 @@ function draw(values){
     }
 }
 
-document.getElementById('js--submit').addEventListener("click", loadArray);
-document.getElementById('js--selection').addEventListener("click", (e) => setSort(e, 'selection'));
-document.getElementById('js--bubble').addEventListener("click", (e) => setSort(e, 'bubble'));
-// document.getElementById('js--quick').addEventListener("click", (e) => setSort(e, 'quick'));
-// document.getElementById('js--merge').addEventListener("click", (e) => setSort(e, 'merge'));
-// document.getElementById('js--radix').addEventListener("click", setSort('radix'));
-// document.getElementById('js--cocktail').addEventListener("click", setSort('cocktail'));
-
-const slider = document.getElementById('random');
-slider.oninput = function(){
-    drawRandom(slider.value);
-}
+document.getElementById('js--play').addEventListener("click", playAudio);
 
 function drawRandom(amt){
     let values = [];
@@ -100,7 +74,7 @@ function drawRandom(amt){
 
 function playAudio(){
     audio.crossOrigin = 'Anonymous'
-    audio.src = 'body.mp3'
+    audio.src = 'sound.mp3'
     audio.loop = true
     audio.controls = true
     document.body.appendChild(audio);
