@@ -1,11 +1,3 @@
-# line-sort
-visualizing sorting algorithms with lines.
+# line-sort, Music
 
-todo
-quick sort
-merge sort
-radix sort
-cocktail sort
-fix small widow error on canvas
-
-slider for generative
+this is the music viz for line sorts
