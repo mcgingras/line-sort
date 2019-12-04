@@ -11,8 +11,21 @@ function quickSort(){
  * best:
  * worst:
  */
-function mergeSort(){
-    //todo
+export function mergeSort(arr){
+    if(arr.length <= 1){
+        return arr;
+    }
+
+    const middle = Math.floor(arr.length / 2);
+    const left = arr.slice(0, middle);
+    const right = arr.slice(middle);
+
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right){
+    console.log(left);
+    console.log(right);
 }
 
 function radixSort(){
@@ -84,3 +97,4 @@ export function selectionSort(arr){
 function cocktailSort(){
     // todo
 }
+
