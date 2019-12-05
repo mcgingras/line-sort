@@ -6,14 +6,13 @@ var bins = 64;   // range: [16, 1024], def: 1024 - MUST be power of 2
 
 // audio related globals
 let canplay = false;
-let audio  = new Audio;
+let audio  = new Audio();
 let analyser, waveArray, freqArray;
 
 window.onload = function() {
     let canvas = document.getElementById('myCanvas');
     paper.setup(canvas);
-    let values = document.getElementById('array').value;
-    draw(values);
+    // draw(values);
 }
 
 
@@ -68,13 +67,16 @@ function drawRandom(amt){
         s = s + n + ',';
     }
     
-    document.getElementById('array').value = s.substring(0, s.length-1);
+    // document.getElementById('array').value = s.substring(0, s.length-1);
     draw(s.substring(0, s.length-1));
 }
 
 function playAudio(){
+    var blob = window.URL || window.webkitURL;
+    let file = document.getElementById('song').files[0];
+    let src = blob.createObjectURL(file);
     audio.crossOrigin = 'Anonymous'
-    audio.src = 'sound.mp3'
+    audio.src = src;
     audio.loop = true
     audio.controls = true
     document.body.appendChild(audio);
@@ -98,7 +100,6 @@ function playAudio(){
 
 function updateDrawing(){
     if(canplay){
-        console.log('music playing');
         analyser.getByteTimeDomainData(waveArray); // Wavalength data
         analyser.getByteFrequencyData(freqArray);  // Frequency data
         function range(n){
@@ -108,7 +109,6 @@ function updateDrawing(){
             return scale(n,0,256,0,5);
         }
         let waveCapped = freqArray.map((n) => range(n));
-        console.log(waveCapped);
         
         drawRandom(waveCapped[20] + waveCapped[22] + waveCapped[24] + 2 );
         // draw(waveCapped.join(","));
