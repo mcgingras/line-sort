@@ -75,6 +75,7 @@ function draw(values){
 document.getElementById('js--submit').addEventListener("click", loadArray);
 document.getElementById('js--selection').addEventListener("click", (e) => setSort(e, 'selection'));
 document.getElementById('js--bubble').addEventListener("click", (e) => setSort(e, 'bubble'));
+document.getElementById('js--music').addEventListener("click", (e) => playAudio());
 // document.getElementById('js--quick').addEventListener("click", (e) => setSort(e, 'quick'));
 // document.getElementById('js--merge').addEventListener("click", (e) => setSort(e, 'merge'));
 // document.getElementById('js--radix').addEventListener("click", setSort('radix'));
@@ -100,7 +101,7 @@ function drawRandom(amt){
 
 function playAudio(){
     audio.crossOrigin = 'Anonymous'
-    audio.src = 'body.mp3'
+    audio.src = 'sound.mp3'
     audio.loop = true
     audio.controls = true
     document.body.appendChild(audio);
@@ -124,7 +125,6 @@ function playAudio(){
 
 function updateDrawing(){
     if(canplay){
-        console.log('music playing');
         analyser.getByteTimeDomainData(waveArray); // Wavalength data
         analyser.getByteFrequencyData(freqArray);  // Frequency data
         function range(n){
@@ -141,7 +141,6 @@ function updateDrawing(){
         
     }
     window.requestAnimationFrame(updateDrawing);
-    
 }
 
 updateDrawing();
